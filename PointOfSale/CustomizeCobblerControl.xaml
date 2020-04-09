@@ -3,10 +3,48 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ExamTwoQuestions.PointOfSale"
+             xmlns:local="clr-namespace:ExamTwoCodeQuestions.Data;assembly=ExamTwoCodeQuestions.Data"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="250" d:DesignWidth="600">
+
+
+
+    <UserControl.Resources>
+        <Style TargetType="CheckBox">
+        </Style>
+
+        <ObjectDataProvider x:Key="data" MethodName="GetValues"
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:FruitFilling"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock>Customize Cobbler</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Customize Cobbler" FontSize="70" Grid.ColumnSpan="2" TextAlignment="Left" VerticalAlignment="Center"/>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right">
+            <TextBlock VerticalAlignment="Center" FontSize="40" Padding="20">Options:</TextBlock>
+            <CheckBox IsChecked="{Binding Path = WithIceCream}" Margin="10" VerticalContentAlignment="Center"  VerticalAlignment="Center" FontSize="25" Content="Ice Cream"></CheckBox>
+        </StackPanel>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left">
+            <TextBlock VerticalAlignment="Center" FontSize="30" Padding="20">Filling:</TextBlock>
+            <ComboBox SelectedValue ="{Binding Path=Fruit}" SelectedIndex="0" Height="40" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150"
+              ItemsSource="{Binding Source={StaticResource data}}"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>

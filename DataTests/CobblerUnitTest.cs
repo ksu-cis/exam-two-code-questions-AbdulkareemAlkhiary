@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using ExamTwoCodeQuestions.Data;
 using Xunit;
 
@@ -71,6 +72,59 @@ namespace ExamTwoCodeQuestions.DataTests
         {
             var cobbler = new Cobbler();
             Assert.IsAssignableFrom<IOrderItem>(cobbler);
+        }
+
+        /// <summary>
+        /// Ensures class implements INotifyChangedProperty
+        /// </summary>
+        [Fact]
+        public void CobblerShouldImplrementINotifyPropertyChanged()
+        {
+            var cobbler = new Cobbler();
+            Assert.IsAssignableFrom<INotifyPropertyChanged>(cobbler);
+        }
+
+        /// <summary>
+        /// Testing fruit property
+        /// </summary>
+        [Theory]
+        [InlineData(FruitFilling.Peach)]
+        [InlineData(FruitFilling.Cherry)]
+        [InlineData(FruitFilling.Blueberry)]
+        public void ChangingFruitPropertyShouldInvokePropertyChangedForFruit(FruitFilling filling)
+        {
+            Cobbler cobbler = new Cobbler();
+            Assert.PropertyChanged(cobbler, "Fruit", () =>
+            {
+                cobbler.Fruit = filling;
+            });
+        }
+
+
+        /// <summary>
+        /// Testing withIceCream property
+        /// </summary>
+        [Fact]
+        public void ChangingWithIceCreamPropertyShouldInvokePropertyChangedForWithIceCream()
+        {
+            var cobbler = new Cobbler();
+            Assert.PropertyChanged(cobbler, "WithIceCream", () =>
+            {
+                cobbler.WithIceCream = true;
+            });
+        }
+
+        /// <summary>
+        /// Changing the WithIceCream property 
+        /// </summary>
+        [Fact]
+        public void ChangingWithIceCreamShouldInvokePropertyChangedForSpecialInstructions()
+        {
+            var cobbler = new Cobbler();
+            Assert.PropertyChanged(cobbler, "SpecialInstructions", () =>
+            {
+                cobbler.WithIceCream = true;
+            });
         }
     }
 }
